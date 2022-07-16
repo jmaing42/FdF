@@ -10,7 +10,7 @@ CFLAGS := -Wall -Wextra -Werror -std=c99 -pedantic $(CPPFLAGS)
 
 # mlx
 CFLAGS += -I.cache/mlx/minilibx_mms_20191025_beta
-LDFLAGS += -L.cache/mlx/minilibx_mms_20191025_beta -lmlx
+LDFLAGS += -L.cache/mlx/minilibx_mms_20191025_beta -lmlx -framework OpenGL -framework AppKit
 
 OBJ_DIR := .cache
 
@@ -20,7 +20,7 @@ SRCS_LIBFT := $(shell find . -name "ft_*.c" | grep -v /test/ | xargs)
 SRCS_LIBFTM := $(shell find . -name "ftm_*.c" | grep -v /test/ | xargs)
 
 NAME := fdf
-EXECUTABLE_TARGETS := $(NAME)
+EXECUTABLE_TARGETS := $(NAME).exe
 
 all: $(EXECUTABLE_TARGETS)
 bonus: all
@@ -28,7 +28,7 @@ clean:
 	$Qrm -rf $(OBJ_DIR)
 fclean:
 	$Q$(MAKE) clean
-	$Qrm -f $(EXECUTABLE_TARGETS:=.exe)
+	$Qrm -f $(EXECUTABLE_TARGETS)
 re:
 	$Q$(MAKE) NO_ADDITIONAL_J=1 fclean
 	$Q$(MAKE) NO_ADDITIONAL_J=1 all
@@ -71,7 +71,7 @@ $(OBJ_DIR)/%.a:
 	$Q$(AR) $(ARFLAGS) $@ $^
 $(OBJ_DIR)/%.exe:
 	$Qmkdir -p $(@D)
-	$Q$(CCLD) $(LDFLAGS) -MJ $@.part.json -o $@ $^
+	$Q$(CCLD) $(LDFLAGS) -o $@ $^
 $(OBJ_DIR)/%$(SUFFIX).o: %.c
 	$Qmkdir -p $(@D)
 	$Q$(CC) $(CFLAGS) -MJ $@.part.json -MMD -o $@ -c $<
@@ -79,10 +79,13 @@ $(OBJ_DIR)/%$(SUFFIX).o: %.c
 $(OBJ_DIR)/libf$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBF))
 $(OBJ_DIR)/libft$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBFT))
 $(OBJ_DIR)/libftm$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBFTM))
-$(OBJ_DIR)/$(NAME)$(SUFFIX).exe: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_FDF)) $(OBJ_DIR)/libf$(SUFFIX).a $(OBJ_DIR)/libft$(SUFFIX).a $(OBJ_DIR)/libftm$(SUFFIX).a
-$(EXECUTABLE_TARGETS): %: $(OBJ_DIR)/%$(SUFFIX).exe
-	$Qcp $< $@.exe
+$(OBJ_DIR)/$(NAME)$(SUFFIX).exe: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_FDF)) $(OBJ_DIR)/libf$(SUFFIX).a $(OBJ_DIR)/libft$(SUFFIX).a $(OBJ_DIR)/libftm$(SUFFIX).a | .cache/mlx/minilibx_mms_20191025_beta/libmlx.dylib
+$(EXECUTABLE_TARGETS): %.exe: $(OBJ_DIR)/%$(SUFFIX).exe
+	$Qcp $< $@
 .PHONY: $(EXECUTABLE_TARGETS)
+
+%.c: .cache/mlx/minilibx_mms_20191025_beta
+	$Qtouch $@
 
 .PHONY: compile_commands.json
 compile_commands.json:
