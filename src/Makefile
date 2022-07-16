@@ -85,7 +85,6 @@ $(EXECUTABLE_TARGETS): %.exe: $(OBJ_DIR)/%$(SUFFIX).exe
 .PHONY: $(EXECUTABLE_TARGETS)
 
 %.c: .cache/mlx/minilibx_mms_20191025_beta
-	$Qtouch $@
 
 .PHONY: compile_commands.json
 compile_commands.json:
