@@ -8,8 +8,9 @@ ARFLAGS := cr$(if $(filter 1,$(V) $(VERBOSE)),v,)
 CPPFLAGS := $(shell find . -type d -mindepth 1 | grep -v /test/ | sed "s/^/-I /" | xargs)
 CFLAGS := -Wall -Wextra -Werror -std=c99 -pedantic $(CPPFLAGS)
 
-# CFLAGS += -I.cache/mlx/minilibx_mms_20191025_beta
-# LDFLAGS += -L.cache/mlx/minilibx_mms_20191025_beta -lmlx
+# mlx
+CFLAGS += -I.cache/mlx/minilibx_mms_20191025_beta
+LDFLAGS += -L.cache/mlx/minilibx_mms_20191025_beta -lmlx
 
 OBJ_DIR := .cache
 
@@ -89,6 +90,9 @@ compile_commands.json:
 .PHONY: dev
 dev: compile_commands.json
 	$Qfind . -type d -name test | xargs -L1 -I {} make -C {} dev
+.PHONY: run
+run: $(NAME).exe
+	$QDYLD_LIBRARY_PATH=.cache/mlx/minilibx_mms_20191025_beta ./$<
 
 # dependencies
 -include $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).d,$(SRCS))
