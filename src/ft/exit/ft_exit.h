@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_main.c                                         :+:      :+:    :+:   */
+/*   ft_exit.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/16 09:19:57 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/07/16 17:18:35 by Juyeong Maing    ###   ########.fr       */
+/*   Created: 2022/05/02 14:10:15 by jmaing            #+#    #+#             */
+/*   Updated: 2022/06/27 03:10:04 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef FT_EXIT_H
+# define FT_EXIT_H
 
-#include <mlx.h>
+# include <stdlib.h>
 
-#include "f_hello_world.h"
+typedef void	(*t_ft_exit_cleanup_function)();
 
-#include "fdf.h"
+int		ft_exit(signed char status);
+void	ft_set_exit_handler(void (*cleanup)());
 
-int	main(void)
-{
-	t_fdf			fdf;
-	t_fdf_options	options;
-
-	if (!fdf_init_options(&options) || !fdf_init(&fdf, &options))
-		return (EXIT_FAILURE);
-	mlx_loop(fdf.mlx_context);
-	return (EXIT_SUCCESS);
-}
+#endif

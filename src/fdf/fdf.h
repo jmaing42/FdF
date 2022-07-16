@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_main.c                                         :+:      :+:    :+:   */
+/*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/16 09:19:57 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/07/16 17:18:35 by Juyeong Maing    ###   ########.fr       */
+/*   Created: 2022/07/16 13:41:15 by Juyeong Maing     #+#    #+#             */
+/*   Updated: 2022/07/16 13:45:45 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef FDF_H
+# define FDF_H
 
-#include <mlx.h>
+# include "ft_types.h"
 
-#include "f_hello_world.h"
-
-#include "fdf.h"
-
-int	main(void)
+typedef struct s_fdf
 {
-	t_fdf			fdf;
-	t_fdf_options	options;
+	void	*mlx_context;
+	void	*mlx_window;
+	void	*front;
+	void	*back;
+}	t_fdf;
 
-	if (!fdf_init_options(&options) || !fdf_init(&fdf, &options))
-		return (EXIT_FAILURE);
-	mlx_loop(fdf.mlx_context);
-	return (EXIT_SUCCESS);
-}
+typedef struct s_fdf_options
+{
+	int		window_w;
+	int		window_h;
+	char	*title;
+}	t_fdf_options;
+
+t_err	fdf_init_options(t_fdf_options *out);
+t_err	fdf_init(t_fdf *out, t_fdf_options *option);
+
+#endif
