@@ -23,7 +23,7 @@ int	main(void)
 	t_fdf			fdf;
 	t_fdf_options	options;
 
-	if (!fdf_init_options(&options) || !fdf_init(&fdf, &options))
+	if (fdf_init_options(&options) || fdf_init(&fdf, &options))
 		return (EXIT_FAILURE);
 	mlx_loop(fdf.mlx_context);
 	return (EXIT_SUCCESS);

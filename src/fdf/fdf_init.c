@@ -16,6 +16,14 @@
 
 #include "ft_assert.h"
 
+t_err	fdf_init_options(t_fdf_options *out)
+{
+	out->title = "Hello world!";
+	out->window_w = 1920;
+	out->window_h = 1080;
+	return (false);
+}
+
 t_err	fdf_init(t_fdf *out, t_fdf_options *options)
 {
 	out->mlx_context = mlx_init();
