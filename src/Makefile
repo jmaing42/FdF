@@ -88,7 +88,7 @@ $(EXECUTABLE_TARGETS): %.exe: $(OBJ_DIR)/%$(SUFFIX).exe
 
 .PHONY: compile_commands.json
 compile_commands.json:
-	$Q$(MAKE) -k PROFILE=debug TARGET=development SANITIZER=address all ; (printf "[" && find .cache -name "*.json" | xargs cat && printf "]") > $@
+	$Q$(MAKE) -k PROFILE=debug TARGET=development SANITIZER=address all ; (printf "[" && find .cache -name "*.development.debug.json" | xargs cat && printf "]") > $@
 .PHONY: dev
 dev: compile_commands.json
 	$Qfind . -type d -name test | xargs -L1 -I {} make -C {} dev
