@@ -9,8 +9,8 @@ CPPFLAGS := $(shell find . -type d -mindepth 1 | grep -v /test/ | sed "s/^/-I /"
 CFLAGS := -Wall -Wextra -Werror -std=c99 -pedantic $(CPPFLAGS)
 
 # mlx
-CFLAGS += -I.cache/mlx/minilibx_mms_20200219
-LDFLAGS += -L.cache/mlx/minilibx_mms_20200219 -lmlx -framework OpenGL -framework AppKit
+CFLAGS += -I.cache/mlx/minilibx_opengl_20191021
+LDFLAGS += -L.cache/mlx/minilibx_opengl_20191021 -lmlx -framework OpenGL -framework AppKit
 
 OBJ_DIR := .cache
 
@@ -38,11 +38,11 @@ test:
 
 .cache/mlx:
 	mkdir -p .cache/mlx.tmp
-	tar xf ../assets/minilibx_mms_20200219_beta.tgz -C .cache/mlx.tmp
+	tar xf ../assets/minilibx_opengl.tgz -C .cache/mlx.tmp
 	rm -rf .cache/mlx
 	mv .cache/mlx.tmp .cache/mlx
-.cache/mlx/minilibx_mms_20200219/libmlx.dylib: .cache/mlx
-	make -C .cache/mlx/minilibx_mms_20200219 -j 1 libmlx.dylib
+.cache/mlx/minilibx_opengl_20191021/libmlx.dylib: .cache/mlx
+	make -C .cache/mlx/minilibx_opengl_20191021 -j 1
 
 PROFILE ?= release
 ifeq ($(PROFILE),release)
@@ -79,7 +79,7 @@ $(OBJ_DIR)/%$(SUFFIX).o: %.c
 $(OBJ_DIR)/libf$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBF))
 $(OBJ_DIR)/libft$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBFT))
 $(OBJ_DIR)/libftm$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBFTM))
-$(OBJ_DIR)/$(NAME)$(SUFFIX).exe: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_FDF)) $(OBJ_DIR)/libf$(SUFFIX).a $(OBJ_DIR)/libft$(SUFFIX).a $(OBJ_DIR)/libftm$(SUFFIX).a | .cache/mlx/minilibx_mms_20200219/libmlx.dylib
+$(OBJ_DIR)/$(NAME)$(SUFFIX).exe: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_FDF)) $(OBJ_DIR)/libf$(SUFFIX).a $(OBJ_DIR)/libft$(SUFFIX).a $(OBJ_DIR)/libftm$(SUFFIX).a | .cache/mlx/minilibx_opengl_20191021/libmlx.dylib
 $(EXECUTABLE_TARGETS): %.exe: $(OBJ_DIR)/%$(SUFFIX).exe
 	$Qcp $< $@
 .PHONY: $(EXECUTABLE_TARGETS)
@@ -92,7 +92,7 @@ dev: compile_commands.json
 	$Qfind . -type d -name test | xargs -L1 -I {} make -C {} dev
 .PHONY: run
 run: $(NAME).exe
-	$QDYLD_LIBRARY_PATH=.cache/mlx/minilibx_mms_20200219 ./$<
+	$QDYLD_LIBRARY_PATH=.cache/mlx/minilibx_opengl_20191021 ./$<
 
 # dependencies
 -include $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).d,$(SRCS))
