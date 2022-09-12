@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_io.h                                            :+:      :+:    :+:   */
+/*   wrap_write.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/21 16:50:32 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/09/12 13:41:44 by Juyeong Maing    ###   ########.fr       */
+/*   Created: 2022/09/04 19:09:00 by Juyeong Maing     #+#    #+#             */
+/*   Updated: 2022/09/04 20:03:52 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IO_H
-# define FT_IO_H
+#include "wrap.h"
 
-# include <stddef.h>
+#include <unistd.h>
 
-# include "ft_types.h"
-
-t_err	ft_io_write(
-			int fd,
-			const void *buf,
-			size_t len);
-
-t_err	ft_io_puts(
-			int fd,
-			const char *buffer);
-
-#endif
+ssize_t	wrap_write(int fd, const void *buffer, size_t bytes)
+{
+	return (write(fd, buffer, bytes));
+}

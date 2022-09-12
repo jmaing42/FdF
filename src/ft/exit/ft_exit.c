@@ -6,7 +6,7 @@
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:10:15 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/07/31 15:21:52 by Juyeong Maing    ###   ########.fr       */
+/*   Updated: 2022/09/12 13:38:32 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+
+#include "wrap.h"
 
 static t_ft_exit_cleanup_function	x(
 	bool get,
@@ -38,7 +40,7 @@ int	ft_exit(signed char status)
 
 	if (cleanup_function)
 		cleanup_function();
-	exit((int) status);
+	wrap_exit((int) status);
 }
 
 void	ft_set_exit_handler(t_ft_exit_cleanup_function cleanup_function)

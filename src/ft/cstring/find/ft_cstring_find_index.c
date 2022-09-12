@@ -6,7 +6,7 @@
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 13:25:46 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/09/05 00:29:11 by Juyeong Maing    ###   ########.fr       */
+/*   Updated: 2022/09/12 13:42:08 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	ft_cstring_find_index(const char *str, char ch)
 
 	if (!str)
 	{
-		ft_puts(
+		ft_io_puts(
 			STDERR_FILENO,
 			"ft_cstring_find_index(): wrong parameter given\n");
 		ft_exit(EXIT_FAILURE);

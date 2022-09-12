@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stringbuilder_new.c                             :+:      :+:    :+:   */
+/*   ft_memory_duplicate.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/22 20:33:58 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/09/12 13:36:47 by Juyeong Maing    ###   ########.fr       */
+/*   Created: 2022/04/22 08:09:51 by Juyeong Maing     #+#    #+#             */
+/*   Updated: 2022/09/04 18:53:24 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_stringbuilder.h"
-
-#include <stdlib.h>
+#include "ft_memory.h"
 
 #include "wrap.h"
 
-#define MINIMUM_BUFFER_SIZE 1024
-
-t_stringbuilder	*new_stringbuilder(size_t buffer_size)
+void	*ft_memory_duplicate(const void *source, size_t size)
 {
-	t_stringbuilder *const	result = wrap_malloc(sizeof(t_stringbuilder));
+	void *const	result = wrap_malloc(size);
 
 	if (!result)
 		return (NULL);
-	result->length = 0;
-	result->head = NULL;
-	result->tail = NULL;
-	result->buffer_size = buffer_size;
-	if (MINIMUM_BUFFER_SIZE > buffer_size)
-		result->buffer_size = MINIMUM_BUFFER_SIZE;
+	ft_memory_copy(result, source, size);
 	return (result);
 }

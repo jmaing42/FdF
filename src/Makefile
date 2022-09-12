@@ -1,5 +1,5 @@
 Q := $(if $(filter 1,$(V) $(VERBOSE)),,@)
-MAKE := $(MAKE) $(if $(filter 1,$(V) $(VERBOSE)),,--no-print-directory) $(if $(filter 1,$(NO_ADDITIONAL_J)),,-j $(shell sh build/nproc.sh))
+MAKE := $(MAKE) $(if $(filter 1,$(V) $(VERBOSE)),,--no-print-directory) $(if $(filter 1,$(NO_ADDITIONAL_J)),,-j $(shell sh build/script/nproc.sh))
 
 CC := clang
 CCLD := clang
@@ -14,6 +14,7 @@ LDFLAGS += -L.cache/mlx/minilibx_opengl_20191021 -lmlx -framework OpenGL -framew
 
 OBJ_DIR := .cache
 
+SRCS_LIBWRAP := $(shell find . -name "wrap_*.c" | grep -v /test/ | xargs)
 SRCS_FDF := $(shell find . -name "fdf_*.c" | grep -v /test/ | xargs)
 SRCS_LIBF := $(shell find . -name "f_*.c" | grep -v /test/ | xargs)
 SRCS_LIBFT := $(shell find . -name "ft_*.c" | grep -v /test/ | xargs)
@@ -76,10 +77,11 @@ $(OBJ_DIR)/%$(SUFFIX).o: %.c
 	$Qmkdir -p $(@D)
 	$Q$(CC) $(CFLAGS) -MJ $@.part.json -MMD -o $@ -c $<
 
+$(OBJ_DIR)/libwrap$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBWRAP))
 $(OBJ_DIR)/libf$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBF))
 $(OBJ_DIR)/libft$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBFT))
 $(OBJ_DIR)/libftm$(SUFFIX).a: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_LIBFTM))
-$(OBJ_DIR)/$(NAME)$(SUFFIX).exe: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_FDF)) $(OBJ_DIR)/libf$(SUFFIX).a $(OBJ_DIR)/libft$(SUFFIX).a $(OBJ_DIR)/libftm$(SUFFIX).a | .cache/mlx/minilibx_opengl_20191021/libmlx.dylib
+$(OBJ_DIR)/$(NAME)$(SUFFIX).exe: $(patsubst ./%.c,$(OBJ_DIR)/%$(SUFFIX).o,$(SRCS_FDF)) $(OBJ_DIR)/libwrap$(SUFFIX).a $(OBJ_DIR)/libf$(SUFFIX).a $(OBJ_DIR)/libft$(SUFFIX).a $(OBJ_DIR)/libftm$(SUFFIX).a | .cache/mlx/minilibx_opengl_20191021/libmlx.dylib
 $(EXECUTABLE_TARGETS): %.exe: $(OBJ_DIR)/%$(SUFFIX).exe
 	$Qcp $< $@
 .PHONY: $(EXECUTABLE_TARGETS)

@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_io.h                                            :+:      :+:    :+:   */
+/*   ft_memory_set.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/21 16:50:32 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/09/12 13:41:44 by Juyeong Maing    ###   ########.fr       */
+/*   Created: 2022/04/22 08:09:51 by Juyeong Maing     #+#    #+#             */
+/*   Updated: 2022/09/04 07:32:31 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IO_H
-# define FT_IO_H
+#include "ft_memory.h"
 
-# include <stddef.h>
+void	*ft_memory_set(void *mem, int value, size_t len)
+{
+	char	*ptr;
 
-# include "ft_types.h"
-
-t_err	ft_io_write(
-			int fd,
-			const void *buf,
-			size_t len);
-
-t_err	ft_io_puts(
-			int fd,
-			const char *buffer);
-
-#endif
+	ptr = (char *) mem;
+	while (len--)
+		*ptr++ = (signed char) value;
+	return (mem);
+}

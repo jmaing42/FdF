@@ -6,13 +6,15 @@
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 20:59:01 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/07/31 15:21:52 by Juyeong Maing    ###   ########.fr       */
+/*   Updated: 2022/09/12 13:37:00 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_stringbuilder.h"
 
 #include <stdlib.h>
+
+#include "wrap.h"
 
 static void	ft_memcpy(void *dest, const void *source, size_t size)
 {
@@ -32,7 +34,7 @@ static void	ft_memcpy(void *dest, const void *source, size_t size)
 
 char	*stringbuilder_to_string(t_stringbuilder *self, size_t offset)
 {
-	char *const				result = (char *)malloc(self->length - offset + 1);
+	char *const				result = wrap_malloc(self->length - offset + 1);
 	t_stringbuilder_node	*node;
 	size_t					position;
 

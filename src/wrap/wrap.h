@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_io.h                                            :+:      :+:    :+:   */
+/*   wrap.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/21 16:50:32 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/09/12 13:41:44 by Juyeong Maing    ###   ########.fr       */
+/*   Created: 2022/09/04 18:39:06 by Juyeong Maing     #+#    #+#             */
+/*   Updated: 2022/09/12 13:40:59 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IO_H
-# define FT_IO_H
+#ifndef WRAP_H
+# define WRAP_H
 
 # include <stddef.h>
+# include <unistd.h>
 
-# include "ft_types.h"
+void	*wrap_malloc(size_t size);
+void	wrap_free(void *memory);
+ssize_t	wrap_write(int fd, const void *buffer, size_t bytes);
+ssize_t	wrap_read(int fd, void *buffer, size_t bytes);
 
-t_err	ft_io_write(
-			int fd,
-			const void *buf,
-			size_t len);
+# ifdef __GNUC__
 
-t_err	ft_io_puts(
-			int fd,
-			const char *buffer);
+__attribute__((noreturn))
 
-#endif
+# endif
+
+void wrap_exit(int status);
+
+# endif
