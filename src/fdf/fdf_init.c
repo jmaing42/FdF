@@ -6,7 +6,7 @@
 /*   By: Juyeong Maing <jmaing@student.42seoul.kr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 13:43:29 by Juyeong Maing     #+#    #+#             */
-/*   Updated: 2022/07/31 15:31:26 by Juyeong Maing    ###   ########.fr       */
+/*   Updated: 2022/09/13 00:38:03 by Juyeong Maing    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static int	fdf_exit(int unused, void *param)
 t_err	fdf_init_options(t_fdf_options *out)
 {
 	out->title = "Hello world!";
-	out->window_w = 1920;
-	out->window_h = 1080;
+	out->window_w = 640;
+	out->window_h = 480;
 	return (false);
 }
 
