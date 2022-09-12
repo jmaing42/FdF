@@ -73,7 +73,7 @@ $(OBJ_DIR)/%.a:
 $(OBJ_DIR)/%.exe:
 	$Qmkdir -p $(@D)
 	$Q$(CCLD) $(LDFLAGS) -o $@ $^
-$(OBJ_DIR)/%$(SUFFIX).o: %.c
+$(OBJ_DIR)/%$(SUFFIX).o: %.c | .cache/mlx
 	$Qmkdir -p $(@D)
 	$Q$(CC) $(CFLAGS) -MJ $@.part.json -MMD -o $@ -c $<
 
